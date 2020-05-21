@@ -1,6 +1,8 @@
-# Big Brother Retail - Sponsored Related Products Component
+# Rainforest: Sponsored Related Products
 
 > Replication of a popular e-commerce site's basic product page. This repo is for a single component - the sponsored related posts carousel.
+
+This project adds a new back-end to the legacy front-end codebase.
 
 ## Related Projects
 
@@ -44,3 +46,27 @@ From within the root directory:
 npm install
 ```
 
+### CRUD API
+
+|    Method    |           Endpoint          |                   Action                |
+| ------------ | --------------------------- | --------------------------------------- |
+| **POST**     |  /api/related_products/:id         |  CREATE a product for a given id     |
+| **GET**      |  /api/related_products/:id         |  READ the related products for a given id |
+| **GET**      |  /api/related_products/product/:id |  READ the product data by id  |
+| **PUT**      |  /api/related_products/:id  |  UPDATE product by product id     |
+| **DELETE**   |  /api/related_products/:id  |  DELETE product by review id     |
+
+**Example Data Inputs for the POST and PUT endpoints**
+
+/:id is the product ID
+
+In order: product name, price, Prime availability (0 is false, 1 is yes), the image URL, number of reviews, and average rating.
+```json
+[
+  "productName",
+  3.5,
+  0,
+  "http://stuff.com/productImage.png",
+  3,
+  0.75
+]

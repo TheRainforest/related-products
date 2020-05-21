@@ -8,14 +8,13 @@ module.exports = {
         callback(err, results);
       });
     },
-    addNew(params, callback = () => {}) {
+    addNew(productId, params, callback = () => {}) {
       const sql = 'INSERT INTO products (productId, name, price, prime, imageUrl, numReviews, avgRating) VALUES (?, ?, ?, ?, ?, ?, ?)';
       // console.log(params);
-      db.query(sql, params, (err, results) => {
+      db.query(sql, [productId, ...params], (err, results) => {
         callback(err, results);
       });
     },
-    // getProduct is not being used at present
     getProduct(productId, callback) {
       const sql = 'SELECT * FROM products WHERE productId = ?';
       db.query(sql, productId, (err, results) => {
@@ -24,12 +23,11 @@ module.exports = {
     },
     async updateProduct(productId, newProduct, callback) {
       const sql1 = 'DELETE FROM productcategories WHERE id_products = (SELECT id FROM products WHERE productId = ?)';
-      await db.query(sql1, [productId], (err, results) => {
+      await db.query(sql1, [productId], (err, results) => { // TODO: return both results from the final query
         if (err) {
           callback(err);
         }
       });
-
       const sql2 = 'REPLACE INTO products (productId, name, price, prime, imageUrl, numReviews, avgRating) VALUES (?, ?, ?, ?, ?, ?, ?)';
       db.query(sql2, [productId, ...newProduct], (err, results) => {
         callback(err, results);
