@@ -5,9 +5,9 @@
 -- SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- SET FOREIGN_KEY_CHECKS=0;
 
-DROP DATABASE IF EXISTS `fec8_related_products`;
-CREATE DATABASE `fec8_related_products`;
-USE `fec8_related_products`;
+DROP DATABASE IF EXISTS `related_products`;
+CREATE DATABASE `related_products`;
+USE `related_products`;
 
 -- ---
 -- Table 'products'

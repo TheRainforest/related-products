@@ -1,6 +1,7 @@
 const faker = require('faker');
 const models = require('../models');
 
+
 async function seedDatabase() {
   // Generate categories
   const cats = new Set();
@@ -31,6 +32,7 @@ async function seedDatabase() {
     i += 1;
   }
   await newProds.forEach(async (product) => {
+    console.log(product);
     await models.products.addNew(product);
   });
 
