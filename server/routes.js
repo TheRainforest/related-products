@@ -3,7 +3,6 @@ const models = require('./models');
 
 const router = express.Router();
 
-// NOTE: The original GET request below involves more than querying a single item from the database and doesn't help when testing the post, delete, and update functionality.
 router.get('/related_products/:id', (req, res) => {
   models.products.getRelated(req.params.id, (err, results) => {
     if (err) {
