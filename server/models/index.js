@@ -23,7 +23,8 @@ module.exports = {
     },
     async updateProduct(productId, newProduct, callback) {
       const sql1 = 'DELETE FROM productcategories WHERE id_products = (SELECT id FROM products WHERE productId = ?)';
-      await db.query(sql1, [productId], (err, results) => { // TODO: return both results from the final query
+      await db.query(sql1, [productId], (err, results) => {
+        // TODO: return both results from the final query
         if (err) {
           callback(err);
         }
