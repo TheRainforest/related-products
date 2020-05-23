@@ -28,6 +28,18 @@ const generate = (count, callback) => {
   writer.pipe(stream);
   // for (let i = 0; i < count; i += 1) {
   let i = count;
+  const batchSize = Math.floor(count / 100);
+  const cats = new Set();
+  while (cats.size < Math.floor(count / batchSize)) {
+    const name = faker.random.word();
+    cats.add(name);
+  }
+  const categories = [...cats];
+  const catsLength = categories.length;
+
+  let batchDivider = batchSize; // 100000
+  let keepCount = 0;
+  let assigner = 0;
   const createRow = () => {
     writer.write({
       name: faker.commerce.productName(),
@@ -36,17 +48,23 @@ const generate = (count, callback) => {
       imageUrl: i > imglen ? `https://sdc-rainforest-related-items.s3.us-east-1.amazonaws.com/${images[i % imglen]}` : `https://sdc-rainforest-related-items.s3.us-east-1.amazonaws.com//${images[i]}`,
       numReviews: faker.random.number(),
       avgRating: (Math.floor((Math.random() * 6) + 5)) / 2,
+      category: categories[assigner],
     });
   };
-  let keepCount = 0;
   const makeWrite = () => {
     let ok = true;
     do {
+      if (keepCount > batchDivider) {
+        batchDivider += batchSize; // 100000
+        if (assigner < catsLength - 1) {
+          assigner += 1;
+        }
+      }
       i -= 1;
       keepCount += 1;
       if (i === 0) {
         createRow();
-        console.time('finished in');
+        console.timeEnd('finished in');
         callback(keepCount);
       } else {
         ok = writer.write({
@@ -56,6 +74,7 @@ const generate = (count, callback) => {
           imageUrl: i > imglen ? `https://sdc-rainforest-related-items.s3.us-east-1.amazonaws.com/${images[i % imglen]}` : `https://sdc-rainforest-related-items.s3.us-east-1.amazonaws.com//${images[i]}`,
           numReviews: faker.random.number(),
           avgRating: (Math.floor((Math.random() * 6) + 5)) / 2,
+          category: categories[assigner],
         });
       }
     } while (i > 0 && ok);
@@ -69,6 +88,6 @@ const generate = (count, callback) => {
   makeWrite();
 };
 
-generate(10000000, (queue) => {
+generate(10000000, (queue) => { // 10000000
   console.log('Finished at', queue);
 });
