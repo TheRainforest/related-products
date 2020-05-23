@@ -30,17 +30,17 @@ const generate = (count, callback) => {
   // for (let i = 0; i < count; i += 1) {
   let i = count;
   const batchSize = Math.floor(count / 400000);
-  const cats = new Set();
-  while (cats.size < Math.floor(count / batchSize)) {
-    const name = faker.random.word();
-    cats.add(name);
-  }
-  const categories = [...cats];
-  const catsLength = categories.length;
+  // const cats = new Set();
+  // while (cats.size < Math.floor(count / batchSize)) {
+  //   const name = faker.random.word();
+  //   cats.add(name);
+  // }
+  // const categories = [...cats];
+  // const catsLength = categories.length;
 
   let batchDivider = batchSize; // 100000
   let keepCount = 0;
-  let assigner = 0;
+  let category = 0;
   const createRow = () => {
     writer.write({
       productId: keepCount,
@@ -50,7 +50,7 @@ const generate = (count, callback) => {
       imageUrl: i > imglen ? `https://sdc-rainforest-related-items.s3.us-east-1.amazonaws.com/${images[i % imglen]}` : `https://sdc-rainforest-related-items.s3.us-east-1.amazonaws.com//${images[i]}`,
       numReviews: faker.random.number(),
       avgRating: (Math.floor((Math.random() * 6) + 5)) / 2,
-      category: categories[assigner],
+      category,
     });
   };
   const makeWrite = () => {
@@ -58,9 +58,7 @@ const generate = (count, callback) => {
     do {
       if (keepCount > batchDivider) {
         batchDivider += batchSize; // 100000
-        if (assigner < catsLength - 1) {
-          assigner += 1;
-        }
+        category += 1;
       }
       i -= 1;
       keepCount += 1;
@@ -77,7 +75,7 @@ const generate = (count, callback) => {
           imageUrl: i > imglen ? `https://sdc-rainforest-related-items.s3.us-east-1.amazonaws.com/${images[i % imglen]}` : `https://sdc-rainforest-related-items.s3.us-east-1.amazonaws.com//${images[i]}`,
           numReviews: faker.random.number(),
           avgRating: (Math.floor((Math.random() * 6) + 5)) / 2,
-          category: categories[assigner],
+          category,
         });
       }
     } while (i > 0 && ok);
