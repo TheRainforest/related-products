@@ -28,7 +28,7 @@ const generate = (count, callback) => {
   writer.pipe(stream);
   // for (let i = 0; i < count; i += 1) {
   let i = count;
-  const batchSize = Math.floor(count / 100);
+  const batchSize = Math.floor(count / 1000);
   const cats = new Set();
   while (cats.size < Math.floor(count / batchSize)) {
     const name = faker.random.word();
@@ -42,6 +42,7 @@ const generate = (count, callback) => {
   let assigner = 0;
   const createRow = () => {
     writer.write({
+      productId: keepCount,
       name: faker.commerce.productName(),
       price: faker.commerce.price(),
       prime: Math.floor(Math.random() * 2),
@@ -68,6 +69,7 @@ const generate = (count, callback) => {
         callback(keepCount);
       } else {
         ok = writer.write({
+          productId: keepCount,
           name: faker.commerce.productName(),
           price: faker.commerce.price(),
           prime: Math.floor(Math.random() * 2),
