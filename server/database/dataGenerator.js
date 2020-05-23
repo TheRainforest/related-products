@@ -38,10 +38,11 @@ const generate = (count, callback) => {
   const catsLength = categories.length;
 
   let batchDivider = batchSize; // 100000
-  let keepCount = 0;
+  let keepCount = 1;
   let assigner = 0;
   const createRow = () => {
     writer.write({
+      productId: keepCount,
       name: faker.commerce.productName(),
       price: faker.commerce.price(),
       prime: Math.floor(Math.random() * 2),
@@ -68,6 +69,7 @@ const generate = (count, callback) => {
         callback(keepCount);
       } else {
         ok = writer.write({
+          productId: keepCount,
           name: faker.commerce.productName(),
           price: faker.commerce.price(),
           prime: Math.floor(Math.random() * 2),
