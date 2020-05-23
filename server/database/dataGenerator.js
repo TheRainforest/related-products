@@ -38,7 +38,7 @@ const generate = (count, callback) => {
   const catsLength = categories.length;
 
   let batchDivider = batchSize; // 100000
-  let keepCount = 1;
+  let keepCount = 0;
   let assigner = 0;
   const createRow = () => {
     writer.write({
@@ -73,7 +73,7 @@ const generate = (count, callback) => {
           name: faker.commerce.productName(),
           price: faker.commerce.price(),
           prime: Math.floor(Math.random() * 2),
-          imageUrl: i > imglen ? `https://sdc-rainforest-related-items.s3.us-east-1.amazonaws.com/${images[i % imglen]}` : `https://sdc-rainforest-related-items.s3.us-east-1.amazonaws.com//${images[i]}`,
+          imageUrl: i > imglen ? `https://sdc-rainforest-related-items.s3.us-east-1.amazonaws.com/${images[i % imglen]}` : `https://sdc-rainforest-related-items.s3.us-east-1.amazonaws.com/${images[i]}`,
           numReviews: faker.random.number(),
           avgRating: (Math.floor((Math.random() * 6) + 5)) / 2,
           category: categories[assigner],
