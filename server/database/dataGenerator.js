@@ -22,13 +22,14 @@ const generate = (count, callback) => {
     console.log(err);
   });
   stream.on('finish', () => {
+    console.timeEnd('finished in');
     console.log('Data finished writing to file.');
   });
 
   writer.pipe(stream);
   // for (let i = 0; i < count; i += 1) {
   let i = count;
-  const batchSize = Math.floor(count / 1000);
+  const batchSize = Math.floor(count / 400000);
   const cats = new Set();
   while (cats.size < Math.floor(count / batchSize)) {
     const name = faker.random.word();
@@ -82,7 +83,6 @@ const generate = (count, callback) => {
     } while (i > 0 && ok);
     if (i > 0) {
       stream.once('drain', () => {
-        // console.log('The drain is emptied.');
         makeWrite();
       });
     }
