@@ -28,7 +28,7 @@ const generate = (count, callback) => {
   writer.pipe(stream);
   // for (let i = 0; i < count; i += 1) {
   let i = count;
-  const batchSize = Math.floor(count / 100);
+  const batchSize = Math.floor(count / 1000);
   const cats = new Set();
   while (cats.size < Math.floor(count / batchSize)) {
     const name = faker.random.word();
