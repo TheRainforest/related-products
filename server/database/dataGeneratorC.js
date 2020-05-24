@@ -74,7 +74,7 @@ const generate = (count, callback) => {
           productId: keepCount,
           name: faker.commerce.productName(),
           price: faker.commerce.price(),
-          prime: Math.floor(Math.random() * 2),
+          prime: Math.floor(Math.random() * 2) ? true : false,
           imageUrl: i > imglen ? `https://sdc-rainforest-related-items.s3.us-east-1.amazonaws.com/${images[i % imglen]}` : `https://sdc-rainforest-related-items.s3.us-east-1.amazonaws.com//${images[i]}`,
           numReviews: faker.random.number(),
           avgRating: (Math.floor((Math.random() * 6) + 5)) / 2,

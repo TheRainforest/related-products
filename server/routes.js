@@ -1,6 +1,29 @@
 const express = require('express');
 const models = require('./models');
 
+// the shape of the data from the database:
+// {
+// productId: number,
+// name: string,
+// price: integer,
+// prime: binary,
+// imageUrl: string,
+// numReviews: integer,
+// avgRating: 2.5,
+// }
+//
+// the shape the client expects:
+// [ {
+// "id": 70,
+// "productId": 71,
+// "name": "Refined Frozen Bacon",
+// "price": 974,
+// "prime": 1,
+// "imageUrl": "https://d1ivqy59bo7rzu.cloudfront.net/glass-bead-ornaments.jpg",
+// "numReviews": 72736,
+// "avgRating": 5
+//    } ]
+
 const router = express.Router();
 
 router.get('/related_products/:id', (req, res) => {
