@@ -1,3 +1,5 @@
+// SQL-specific: does not generate productId because DB can auto-increment
+
 const fs = require('fs');
 const faker = require('faker');
 const csv = require('csv-write-stream');
@@ -43,7 +45,6 @@ const generate = (count, callback) => {
   let category = 0;
   const createRow = () => {
     writer.write({
-      productId: keepCount,
       name: faker.commerce.productName(),
       price: faker.commerce.price(),
       prime: Math.floor(Math.random() * 2),
@@ -68,7 +69,6 @@ const generate = (count, callback) => {
         callback(keepCount);
       } else {
         ok = writer.write({
-          productId: keepCount,
           name: faker.commerce.productName(),
           price: faker.commerce.price(),
           prime: Math.floor(Math.random() * 2),
