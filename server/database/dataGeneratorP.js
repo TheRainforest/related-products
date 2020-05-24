@@ -71,7 +71,7 @@ const generate = (count, callback) => {
         ok = writer.write({
           name: faker.commerce.productName(),
           price: faker.commerce.price(),
-          prime: Math.floor(Math.random() * 2),
+          prime: Math.floor(Math.random() * 2) ? true : false,
           imageUrl: i > imglen ? `https://sdc-rainforest-related-items.s3.us-east-1.amazonaws.com/${images[i % imglen]}` : `https://sdc-rainforest-related-items.s3.us-east-1.amazonaws.com//${images[i]}`,
           numReviews: faker.random.number(),
           avgRating: (Math.floor((Math.random() * 6) + 5)) / 2,
@@ -88,6 +88,6 @@ const generate = (count, callback) => {
   makeWrite();
 };
 
-generate(10000000, (queue) => { // 10000000
+generate(1000, (queue) => { // 10000000
   console.log('Finished at', queue);
 });
