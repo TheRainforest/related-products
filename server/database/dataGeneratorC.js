@@ -1,3 +1,5 @@
+// This is customized for Cassandra, whose data must contain generated productIds.
+
 const fs = require('fs');
 const faker = require('faker');
 const csv = require('csv-write-stream');
