@@ -18,7 +18,7 @@ const imglen = images.length;
 
 const generate = (count, callback) => {
   console.time('finished in');
-  const stream = fs.createWriteStream('rainforest-related-items.csv');
+  const stream = fs.createWriteStream('postgres-rainforest-related-items.csv');
 
   stream.on('error', (err) => {
     console.log(err);
@@ -88,6 +88,6 @@ const generate = (count, callback) => {
   makeWrite();
 };
 
-generate(1000, (queue) => { // 10000000
+generate(10000000, (queue) => { // 10000000
   console.log('Finished at', queue);
 });
