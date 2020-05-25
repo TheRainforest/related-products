@@ -18,7 +18,7 @@ const imglen = images.length;
 
 const generate = (count, callback) => {
   console.time('finished in');
-  const stream = fs.createWriteStream('rainforest-related-items.csv');
+  const stream = fs.createWriteStream('cassandra-rainforest-related-items.csv');
 
   stream.on('error', (err) => {
     console.log(err);
