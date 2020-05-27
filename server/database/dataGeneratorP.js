@@ -1,3 +1,5 @@
+// SQL-specific: does not generate productId because DB can auto-increment
+
 const fs = require('fs');
 const faker = require('faker');
 const csv = require('csv-write-stream');
@@ -16,7 +18,7 @@ const imglen = images.length;
 
 const generate = (count, callback) => {
   console.time('finished in');
-  const stream = fs.createWriteStream('rainforest-related-items.csv');
+  const stream = fs.createWriteStream('postgres-rainforest-related-items.csv');
 
   stream.on('error', (err) => {
     console.log(err);
@@ -43,7 +45,6 @@ const generate = (count, callback) => {
   let category = 0;
   const createRow = () => {
     writer.write({
-      productId: keepCount,
       name: faker.commerce.productName(),
       price: faker.commerce.price(),
       prime: Math.floor(Math.random() * 2),
@@ -68,10 +69,9 @@ const generate = (count, callback) => {
         callback(keepCount);
       } else {
         ok = writer.write({
-          productId: keepCount,
           name: faker.commerce.productName(),
           price: faker.commerce.price(),
-          prime: Math.floor(Math.random() * 2),
+          prime: Math.floor(Math.random() * 2) ? true : false,
           imageUrl: i > imglen ? `https://sdc-rainforest-related-items.s3.us-east-1.amazonaws.com/${images[i % imglen]}` : `https://sdc-rainforest-related-items.s3.us-east-1.amazonaws.com//${images[i]}`,
           numReviews: faker.random.number(),
           avgRating: (Math.floor((Math.random() * 6) + 5)) / 2,
