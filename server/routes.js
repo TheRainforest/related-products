@@ -46,8 +46,8 @@ router.get('/related_products/product/:id', (req, res) => {
   });
 });
 
-router.post('/related_products/:id', (req, res) => {
-  models.products.addNew(req.params.id, req.body, (err, results) => {
+router.post('/related_products/', (req, res) => {
+  models.products.addNew(req.body, (err, results) => {
     if (err) {
       // res.status(500).send(err);
       res.status(500).send('Something went wrong!');
