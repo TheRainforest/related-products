@@ -9,21 +9,6 @@ const db = postgres({
   // password: process.env.DB_PASS,
   database: process.env.DB_NAME,
   transform: {
-    // column(item) {
-    //   if (item === 'productid') {
-    //     return 'productId';
-    //   }
-    //   if (item === 'imageurl') {
-    //     return 'imageUrl';
-    //   }
-    //   if (item === 'numreviews') {
-    //     return 'numReviews';
-    //   }
-    //   if (item === 'avgrating') {
-    //     return 'avgRating';
-    //   }
-    //   return item;
-    // },
     value(item) {
       if (item === true) {
         return 1;

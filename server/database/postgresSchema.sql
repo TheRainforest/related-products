@@ -1,8 +1,3 @@
-
-DROP DATABASE IF EXISTS `related_products`;
-CREATE DATABASE `related_products`;
-USE `related_products`;
-
 -- ---
 -- Table 'products'
 --
@@ -22,4 +17,4 @@ CREATE TABLE products (
 );
 
 
-copy products(name, price, prime, "imageUrl, numReviews, avgRating, category) from '../postgres-rainforest-related-items.csv' DELIMITER ',' CSV HEADER;
+copy products(name, price, prime, "imageUrl", "numReviews", "avgRating", category) from '../postgres-rainforest-related-items.csv' DELIMITER ',' CSV HEADER;
