@@ -3,42 +3,64 @@ const db = require('../database');
 module.exports = {
   products: {
     getRelated(productId, callback) {
-      const sql = `SELECT * FROM products WHERE category = (SELECT category FROM products WHERE productId = ${productId}`;
-      db.query(sql, [productId, productId], (err, results) => {
-        callback(err, results);
-      });
-    },
-    addNew(params, callback = () => {}) {
-      const sql = 'INSERT INTO products (name, price, prime, imageUrl, numReviews, avgRating) VALUES (?, ?, ?, ?, ?, ?)';
-      // console.log(params);
-      db.query(sql, [...params], (err, results) => {
-        callback(err, results);
-      });
+      db`
+        SELECT * FROM products WHERE category = (SELECT category FROM products WHERE "productId" = ${productId})
+      `
+        .then((results) => {
+          callback(null, results);
+        },
+        (err) => {
+          callback(err);
+        });
     },
     getProduct(productId, callback) {
-      const sql = 'SELECT * FROM products WHERE productId = ?';
-      db.query(sql, productId, (err, results) => {
-        callback(err, results);
-      });
-    },
-    async updateProduct(productId, newProduct, callback) {
-      const sql1 = 'DELETE FROM productcategories WHERE id_products = (SELECT id FROM products WHERE productId = ?)';
-      await db.query(sql1, [productId], (err, results) => {
-        // TODO: return both results from the final query
-        if (err) {
+      db`
+        SELECT * FROM products WHERE "productId" = ${productId};
+      `
+        .then((results) => {
+          callback(null, results);
+        },
+        (err) => {
           callback(err);
-        }
-      });
-      const sql2 = 'REPLACE INTO products (productId, name, price, prime, imageUrl, numReviews, avgRating) VALUES (?, ?, ?, ?, ?, ?, ?)';
-      db.query(sql2, [productId, ...newProduct], (err, results) => {
-        callback(err, results);
-      });
+        });
+    },
+    addNew(product, callback = () => {}) {
+      const {
+        name, price, prime, imageUrl, numReviews, avgRating,
+      } = product;
+      db`
+        INSERT INTO products ("productId", name, price, prime, "imageUrl", "numReviews", "avgRating", category)
+        VALUES (default, ${name}, ${price}, ${prime}, ${imageUrl}, ${numReviews}, ${avgRating}, 400000);
+      `
+        .then(
+          (confirmation) => callback(null, confirmation),
+          (err) => {
+            callback(err);
+          },
+        );
+    },
+    updateProduct(productId, newProduct, callback) {
+      db`
+        REPLACE INTO products ("productId", name, price, prime, "imageUrl", "numReviews", "avgRating")
+        VALUES (${[...newProduct]});
+      `
+        .then((confirmation) => {
+          callback(null, confirmation);
+        },
+        (err) => {
+          callback(err);
+        });
     },
     deleteProduct(productId, callback) {
-      const sql = 'DELETE FROM products WHERE productId = ?';
-      db.query(sql, productId, (err, results) => {
-        callback(err, results);
-      });
+      db`
+        DELETE FROM products WHERE productId = ${productId};
+      `
+        .then((confirmation) => {
+          callback(null, confirmation);
+        },
+        (err) => {
+          callback(err);
+        });
     },
   },
 };
