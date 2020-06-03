@@ -10,6 +10,7 @@ module.exports = {
           callback(null, results);
         },
         (err) => {
+	  console.log('getRelated:', err);
           callback(err);
         });
     },
