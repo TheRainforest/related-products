@@ -2,14 +2,7 @@
 
 > Replication of a popular e-commerce site's basic product page. This repo is for a single component - the sponsored related posts carousel.
 
-This project adds a new back-end to the legacy front-end codebase.
-
-## Related Projects
-
-  - https://github.com/hrr45-fec8-legolas/single-item-page
-  - https://github.com/hrr45-fec8-legolas/item-details
-  - https://github.com/hrr45-fec8-legolas/reviews
-  - https://github.com/hrr45-fec8-legolas/proxy-legolas-jmaughan
+This project scales up a new back-end to the legacy front-end codebase.
 
 ## Table of Contents
 
@@ -19,7 +12,7 @@ This project adds a new back-end to the legacy front-end codebase.
 
 ## Usage
 
-> This component uses mysql for a DBMS. Please ensure that mysql is running and import the schema.sql file, then execute `npm run seed` to seed your database.
+> This component uses PostgreSQL. Please ensure that PostgreSQL is running is running, run the commands below, then execute `npm run seed` to seed your database.
 
 - `npm run build` Runs webpack in production mode
 - `npm start` Starts server listening on port 3003
@@ -46,6 +39,14 @@ From within the root directory:
 npm install
 ```
 
+## Technologies Used
+- PostgreSQL - persistence
+- Express - web server
+- Postgres.js - database driver
+- axios - AJAX requests
+- Nginx - proxy server
+- AWS EC2 - deployment and scaling
+
 ### CRUD API
 
 |    Method    |           Endpoint          |                   Action                |
@@ -70,3 +71,11 @@ In order: product name, price, Prime availability (0 is false, 1 is yes), the im
   3,
   0.75
 ]
+```
+
+## Other repos from the same project
+
+  - https://github.com/TheRainforest/product-images
+  - https://github.com/TheRainforest/details
+  - https://github.com/TheRainforest/product-images
+  - https://github.com/TheRainforest/reviews
